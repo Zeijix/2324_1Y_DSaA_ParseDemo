@@ -1,0 +1,301 @@
+namespace ConsoleApp20
+{
+    internal class Program
+    {
+
+        static void Main(string[] args)
+        {
+            int enemyHp3 = 1000;
+            int enemyHp2 = 700;
+            int enemyHp = 500;
+            int playerHp = 150;
+            int heal = 30;
+            int playerAttack = 50;
+            int enemyAttack = 50;
+            Random rand = new Random();
+            //Start of the game HUD
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(" ____  _   _ _   _  ____ _____ ___  _   _ ____     ___   \r\n|  _ \\| | | | \\ | |/ ___| ____/ _ \\| \\ | / ___|   ( _ )  \r\n| | | | | | |  \\| | |  _|  _|| | | |  \\| \\___ \\   / _ \\/\\\r\n| |_| | |_| | |\\  | |_| | |__| |_| | |\\  |___) | | (_>  <\r\n|____/ \\___/|_| \\_|\\____|_____\\___/|_| \\_|____/   \\___/\\/\r\n|  _ \\|  _ \\    / \\  / ___|/ _ \\| \\ | / ___|             \r\n| | | | |_) |  / _ \\| |  _| | | |  \\| \\___ \\             \r\n| |_| |  _ <  / ___ \\ |_| | |_| | |\\  |___) |            \r\n|____/|_| \\_\\/_/   \\_\\____|\\___/|_| \\_|____/             ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.ReadLine();
+            Console.Clear();
+            Console.WriteLine("Hello, Welcome to Dungeons & Dragons!");
+            Console.ReadLine();
+            Console.WriteLine("Press any key to choose a character...");
+            Console.ReadLine();
+            Console.ForegroundColor = ConsoleColor.Red;   
+            Console.WriteLine("[1]. Scaldris (High Damage, High Health)");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("[2]. Ohm (Medium Damage, Medium Health)");
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.WriteLine("[3]. Frost (High Damage, Low Health)");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("[4]. Graund (Low Damage, High Health)");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine();
+            //To input choices..
+            string input = Console.ReadLine();
+            int choice;
+            //Selection of characters used a switch case for easier selection.
+            if (int.TryParse(input, out choice))
+            {
+                switch (choice)
+                {
+                    case 1:
+                        playerHp = 150;
+                        playerAttack = 100;
+                        Console.WriteLine("You decide on Scandris, who has flame power.");
+                        break;
+                    case 2:
+                        playerHp = 130;
+                        playerAttack = 60;
+
+                        Console.WriteLine("You decide on Ohm, who has lightning power.");
+                        break;
+                    case 3:
+                        playerHp = 90;
+                        playerAttack = 100;
+                        Console.WriteLine("You decide on Frost, who has ice power.");
+                        break;
+                    case 4:
+                        playerHp = 150;
+                        playerAttack = 50;
+                        Console.WriteLine("You decide on Graund, who has earth power.");
+                        break;
+                }
+                Console.WriteLine();
+                Console.WriteLine("Press any key to start the game...");
+                Console.ReadKey();
+                Console.Clear();
+                
+                //Intro of the game.
+                Console.WriteLine("Greetings from Dungeons and Dragons,where people with enigmatic abilities battle monstrous,\nhorrifying dragons with extraordinary abilities.");
+                Console.WriteLine();
+                Console.WriteLine("Press any key to proceed...");
+                Console.ReadKey();
+                Console.Clear();
+                Console.WriteLine("The player came upon a wild, beastly dragon.");
+                //So if the player has a greater hp, it will make them choose from 1 - 3
+                while (playerHp > 0)
+                {
+                    Console.ForegroundColor= ConsoleColor.Green;
+                    Console.WriteLine("\nPlayer Health: " + playerHp);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Dragon Health: " + enemyHp);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("\nChoose your action:");
+                    Console.WriteLine("1. Attack");
+                    Console.WriteLine("2. Heal");
+                    Console.WriteLine("3. Flee");
+                    //Functions of the chosen option.
+                    string input2 = Console.ReadLine();
+                    int choice2;
+                    if (int.TryParse(input2, out choice2))
+                    {
+                        switch (choice2)
+                        {
+                            case 1:
+                                enemyHp -= playerAttack;
+
+                                Console.WriteLine("Player attacks enemy and deals " + playerAttack + " damage!");
+                                break;
+                            case 2:
+                                playerHp += heal; ;
+                                Console.WriteLine("Player restores " + heal + " health points!");
+                                break;
+                            case 3:
+                                Console.WriteLine();
+                                break;
+                            default:
+                                Console.WriteLine("Invalid choice. Please choose a number between 1 and 3");
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input. Please enter a number.");
+                    }
+                    //if else statements if the player has low or high health and what happends if u defeat a dragon.
+                    if (enemyHp <= 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("\nYou defeated the Dragon! Congratulations!");
+                        break;
+                    }
+                    if (playerHp <= 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nGame over! You were defeated by the Dragon.");
+                        break;
+                    }
+                    if (choice2 == 3)
+                    {
+                        Console.WriteLine("You fled from the enormous dragon!");
+                        break;
+                    }
+                    Console.ForegroundColor = ConsoleColor.White;
+                    //Choices of the enemy or enemys turn.
+                    if (enemyHp > 0)
+                    {
+                        Console.WriteLine("Dragon turn");
+                        int enemyChoice = rand.Next(0, 3);
+
+                        if (enemyChoice == 0)
+                        {
+                            playerHp -= enemyAttack;
+                            Console.WriteLine("Dragon attacks and deals " + enemyAttack + " damage!");
+                        }
+                        else
+                        {
+                            enemyHp += heal;
+                            Console.WriteLine("Enemy restores " + heal + " health points !");
+                        }
+                        if (enemyChoice == 3)
+                        {
+                            Console.WriteLine("\nThe Dragon tried to flee, but it failed.");
+                            break;
+                        }
+                    }
+                    //Commands when u defeated or got defeated by the dragon.
+                    else
+                    {
+                        Console.WriteLine("Invalid input. Please enter a number.");
+                    }
+                    if (enemyHp <= 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("\nYou defeated the Dragon! Congratulations!");
+                        break;
+                    }
+                    if (playerHp <= 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nGame over! You were defeated by the Dragon.");
+                        break;
+                    }
+                    Console.ForegroundColor = ConsoleColor.White;
+
+                }
+                //LEVEL 2
+                //End of the program.
+                if (playerHp > 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine();
+                    Console.WriteLine("Press any key to proceed to next level.");
+                    Console.ReadLine();
+                }
+                Console.WriteLine("The player came upon a wild, rare beastly dragon.");
+                //So if the player has a greater hp, it will make them choose from 1 - 3
+                while (playerHp > 0)
+                {
+                    Console.WriteLine();
+                    Console.ForegroundColor= ConsoleColor.Green;    
+                    Console.WriteLine("\nPlayer Health: " + playerHp);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Dragon Health: " + enemyHp2);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("\nChoose your action:");
+                    Console.WriteLine("1. Attack");
+                    Console.WriteLine("2. Heal");
+                    Console.WriteLine("3. Flee");
+                    //Functions of the chosen option.
+                    string input3 = Console.ReadLine();
+                    int choice3;
+                    if (int.TryParse(input3, out choice3))
+                    {
+                        switch (choice3)
+                        {
+                            case 1:
+                                enemyHp2 -= playerAttack;
+                                Console.WriteLine("Player attacks enemy and deals " + playerAttack + " damage!");
+                                break;
+                            case 2:
+                                playerHp += heal; ;
+                                Console.WriteLine("Player restores " + heal + " health points!");
+                                break;
+                            case 3:
+                                Console.WriteLine();
+                                break;
+                            default:
+                                Console.WriteLine("Invalid choice. Please choose a number between 1 and 3.");
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input. Please enter a number.");
+                    }
+
+                    //if else statements if the player has low or high health and what happends if u defeat a dragon.
+                    if (enemyHp2 <= 0)
+                    {
+                        Console.WriteLine("\n _  _____ _   _  ____    ___  _____   _____ _   _ _____ \r\n| |/ /_ _| \\ | |/ ___|  / _ \\|  ___| |_   _| | | | ____|\r\n| ' / | ||  \\| | |  _  | | | | |_      | | | |_| |  _|  \r\n| . \\ | || |\\  | |_| | | |_| |  _|     | | |  _  | |___ \r\n|_|\\_\\___|_| \\_|\\____|__\\___/|_|__  _  |_|_|_| |_|_____|\r\n|  _ \\| | | | \\ | |/ ___| ____/ _ \\| \\ | / ___|  | |    \r\n| | | | | | |  \\| | |  _|  _|| | | |  \\| \\___ \\  | |    \r\n| |_| | |_| | |\\  | |_| | |__| |_| | |\\  |___) | |_|    \r\n|____/ \\___/|_| \\_|\\____|_____\\___/|_| \\_|____/  (_)    ");
+                        break;
+                    }
+                    if (playerHp <= 0)
+                    {
+                        Console.WriteLine("\n\n  ____    _    __  __ _____    _____     _______ ____    _ \r\n / ___|  / \\  |  \\/  | ____|  / _ \\ \\   / / ____|  _ \\  | |\r\n| |  _  / _ \\ | |\\/| |  _|   | | | \\ \\ / /|  _| | |_) | | |\r\n| |_| |/ ___ \\| |  | | |___  | |_| |\\ V / | |___|  _ <  |_|\r\n \\____/_/   \\_\\_|  |_|_____|  \\___/  \\_/  |_____|_| \\_\\ (_).");
+                        break;
+                    }
+                    if (choice3 == 3)
+                    {
+                        Console.WriteLine("You fled from the enormous dragon!");
+                        break;
+                    }
+
+                    //Choices of the enemy or enemys turn.
+                    if (enemyHp2 > 0)
+                    {
+                        Console.WriteLine("Dragon turn");
+                        int enemyChoice = rand.Next(0, 3);
+                        if (enemyChoice == 0)
+                        {
+                            playerHp -= enemyAttack;
+                            Console.WriteLine("Dragon attacks and deals " + enemyAttack + " damage!");
+                        }
+                        else
+                        {
+                            enemyHp2 += heal;
+                            Console.WriteLine("Enemy restores " + heal + " health points !");
+                        }
+                        if (enemyChoice == 3)
+                        {
+                            Console.WriteLine("\nThe Dragon tried to flee, but it failed.");
+                            break;
+                        }
+                    }
+                    //Commands when u defeated or got defeated by the dragon.
+                    else
+                    {
+
+                        Console.WriteLine("Invalid input. Please enter a number.");
+                    }
+                    if (enemyHp2 <= 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("\n _  _____ _   _  ____    ___  _____   _____ _   _ _____ \r\n| |/ /_ _| \\ | |/ ___|  / _ \\|  ___| |_   _| | | | ____|\r\n| ' / | ||  \\| | |  _  | | | | |_      | | | |_| |  _|  \r\n| . \\ | || |\\  | |_| | | |_| |  _|     | | |  _  | |___ \r\n|_|\\_\\___|_| \\_|\\____|__\\___/|_|__  _  |_|_|_| |_|_____|\r\n|  _ \\| | | | \\ | |/ ___| ____/ _ \\| \\ | / ___|  | |    \r\n| | | | | | |  \\| | |  _|  _|| | | |  \\| \\___ \\  | |    \r\n| |_| | |_| | |\\  | |_| | |__| |_| | |\\  |___) | |_|    \r\n|____/ \\___/|_| \\_|\\____|_____\\___/|_| \\_|____/  (_)    ");
+                        break;
+                        
+                    }
+                    Console.ForegroundColor = ConsoleColor.White;
+                    if (playerHp <= 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\n  ____    _    __  __ _____    _____     _______ ____    _ \r\n / ___|  / \\  |  \\/  | ____|  / _ \\ \\   / / ____|  _ \\  | |\r\n| |  _  / _ \\ | |\\/| |  _|   | | | \\ \\ / /|  _| | |_) | | |\r\n| |_| |/ ___ \\| |  | | |___  | |_| |\\ V / | |___|  _ <  |_|\r\n \\____/_/   \\_\\_|  |_|_____|  \\___/  \\_/  |_____|_| \\_\\ (_)");
+                        break;
+                        
+                    }
+                    Console.ForegroundColor = ConsoleColor.White;
+
+
+
+
+                }
+            }
+        }
+    }
+}
+                   
+               
+        
